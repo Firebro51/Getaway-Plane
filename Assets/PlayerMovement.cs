@@ -18,10 +18,6 @@ public class PlayerMovement : MonoBehaviour
 
     public float xInput;
 
-    public bool isMoving;
-
-    public bool FacingForward;
-
 
 
 
@@ -33,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
-
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
@@ -71,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
+        if (Input.GetKeyDown(KeyCode.W) && IsGrounded)
         {
             Debug.Log("YEEEEEEEEEEEEEEEE Jump");
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
@@ -84,15 +79,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleAnimations()
     {
-        isMoving = rb.linearVelocity.x != 0;
-        animator.SetBool("IsMoving", isMoving);
-    }
+        animator.SetFloat("xVelocity", rb.linearVelocity.x);
+        animator.SetFloat("yVelocity", rb.linearVelocity.y);
+        animator.SetBool("IsGrounded", IsGrounded);
+    }   
 
     private void HandleMovement()
     {
         HandleInput();
         rb.linearVelocity = new Vector2(xInput * speed, rb.linearVelocity.y);
-
     }
 
     private void OnDrawGizmos()
