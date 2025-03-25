@@ -6,6 +6,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator animator;
 
+    private SpriteRenderer spriteRenderer;
+
     [SerializeField] private float speed;
     [SerializeField] private float jump;
 
@@ -18,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
 
     public bool isMoving;
 
+    public bool FacingForward;
+
+
 
 
     [SerializeField] private bool isDead;
@@ -28,21 +33,13 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponentInChildren<Animator>();
+
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        xInput = Input.GetAxisRaw("Horizontal");
-
-        IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
-
-
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
-        {
-            Debug.Log("YEEEEEEEEEEEEEEEE Jump");
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
-        }
 
         HandleCollisions();
 
@@ -51,6 +48,35 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();
     }
 
+    private void HandleInput()
+    {
+        xInput = Input.GetAxisRaw("Horizontal");        
+        
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            // if the variable isn't empty (we have a reference to our SpriteRenderer
+            if(spriteRenderer != null)
+            {
+                 // flip the sprite
+                 spriteRenderer.flipX = true;
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            // if the variable isn't empty (we have a reference to our SpriteRenderer
+            if(spriteRenderer != null)
+            {
+                 // flip the sprite
+                 spriteRenderer.flipX = false;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded)
+        {
+            Debug.Log("YEEEEEEEEEEEEEEEE Jump");
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jump);
+        }
+    }
     private void HandleCollisions()
     {
         IsGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -64,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleMovement()
     {
+        HandleInput();
         rb.linearVelocity = new Vector2(xInput * speed, rb.linearVelocity.y);
 
     }
