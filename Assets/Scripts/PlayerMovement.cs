@@ -105,7 +105,9 @@ public class PlayerMovementImproved : MonoBehaviour
     {
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
+        
 
+        // KeyCode.JoystickButton0 = A button on xbox controller
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.JoystickButton0))
         {
             JumpButton();
