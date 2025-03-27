@@ -26,6 +26,7 @@ public class PlayerMovementImproved : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private float groundCheckDistnace;
     [SerializeField] private float wallCheckDistance;
+    [SerializeField] private Vector2 wallCheckOffSet = new Vector2(0f, 0.5f);
     [SerializeField] private LayerMask whatIsGround;
     private bool isGrounded;
     private bool isAirborne;
@@ -174,7 +175,8 @@ public class PlayerMovementImproved : MonoBehaviour
         whatIsGround
         );
 
-        isWallDetected = Physics2D.Raycast(transform.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
+        Vector2 wallCheckPosition = (Vector2)transform.position + wallCheckOffSet;
+        isWallDetected = Physics2D.Raycast(wallCheckPosition, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
     }
 
     private void HandleAnimations()
@@ -210,6 +212,8 @@ public class PlayerMovementImproved : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - groundCheckDistnace));
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + (wallCheckDistance * facingDir), transform.position.y));
+        
+        Vector2 wallCheckPosition = (Vector2)transform.position + wallCheckOffSet;
+        Gizmos.DrawLine(wallCheckPosition, new Vector2(wallCheckPosition.x + (wallCheckDistance * facingDir), wallCheckPosition.y));
     }
 }

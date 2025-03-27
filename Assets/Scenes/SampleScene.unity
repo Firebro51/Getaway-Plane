@@ -758,8 +758,9 @@ MonoBehaviour:
   coyoteJumpWindow: 0.1
   knockbackDuration: 1
   knockbackPower: {x: 0, y: 0}
-  groundCheckDistnace: 0.88
+  groundCheckDistnace: 0.72
   wallCheckDistance: 0.5
+  wallCheckOffSet: {x: 0, y: 0.5}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
