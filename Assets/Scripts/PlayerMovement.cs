@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovementImproved : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator anim;
+
+    [Header("Trail")]
+    private TrailRenderer lightTrail;
+
+
 
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
@@ -32,6 +39,11 @@ public class PlayerMovementImproved : MonoBehaviour
     private bool isAirborne;
     private bool isWallDetected;
 
+
+    [Header("Animation")]
+    [SerializeField] private float fallAnimationStopDistance = 1f; // How close to ground to stop fall animation
+    private float animYVelocity;
+    
     private float xInput;
     private float yInput;
 
@@ -42,6 +54,7 @@ public class PlayerMovementImproved : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponentInChildren<Animator>();
+        lightTrail = GetComponent<TrailRenderer>();
     }
 
 
@@ -55,6 +68,7 @@ public class PlayerMovementImproved : MonoBehaviour
         HandleInput();
         HandleWallSlide();
         HandleMovement();
+        // HandleTrail();
         HandleFlip();
         HandleCollision();
         HandleAnimations();
@@ -166,15 +180,7 @@ public class PlayerMovementImproved : MonoBehaviour
 
     private void HandleCollision()
     {
-        isGrounded = Physics2D.BoxCast(
-        transform.position, 
-        new Vector2(0.4f, 0.1f), 
-        0f, 
-        Vector2.down, 
-        groundCheckDistnace, 
-        whatIsGround
-        );
-
+        isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistnace, whatIsGround);
         Vector2 wallCheckPosition = (Vector2)transform.position + wallCheckOffSet;
         isWallDetected = Physics2D.Raycast(wallCheckPosition, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
     }
@@ -185,6 +191,26 @@ public class PlayerMovementImproved : MonoBehaviour
         anim.SetFloat("yVelocity", rb.linearVelocity.y);
         anim.SetBool("IsGrounded", isGrounded);
         anim.SetBool("IsWallDetected", isWallDetected);
+
+        HandleFallAnimation();
+    }
+
+    private void HandleFallAnimation()
+    {
+        // Cast a ray to check distance to ground
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, fallAnimationStopDistance, whatIsGround);
+        
+        // If falling but close to ground, adjust the yVelocity that's sent to the animator
+        if (!isGrounded && rb.linearVelocity.y < 0 && hit.collider != null)
+        {
+            // This will be sent to the animator instead of the actual yVelocity
+            animYVelocity = 0; // Or a small negative value that doesn't trigger your fall animation
+        }
+        else
+        {
+            // Use the actual velocity
+            animYVelocity = rb.linearVelocity.y;
+        }
     }
 
     private void HandleMovement()
@@ -215,5 +241,9 @@ public class PlayerMovementImproved : MonoBehaviour
         
         Vector2 wallCheckPosition = (Vector2)transform.position + wallCheckOffSet;
         Gizmos.DrawLine(wallCheckPosition, new Vector2(wallCheckPosition.x + (wallCheckDistance * facingDir), wallCheckPosition.y));
+
+        // Draw the fall animation 
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x, transform.position.y - fallAnimationStopDistance));
     }
 }

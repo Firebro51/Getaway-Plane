@@ -653,7 +653,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.437, y: -0.276, z: -10}
+  m_LocalPosition: {x: -4.71, y: -4.16, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1206,7 +1206,7 @@ Transform:
   m_GameObject: {fileID: 989703320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.437, y: -0.276, z: 0}
+  m_LocalPosition: {x: -4.71, y: -4.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1291,11 +1291,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 20
   jumpForce: 30
-  bufferJumpWindow: 0.25
+  bufferJumpWindow: 0.1
   coyoteJumpWindow: 0.1
   knockbackDuration: 1
   knockbackPower: {x: 0, y: 0}
-  groundCheckDistnace: 0.72
+  groundCheckDistnace: 0.71
   wallCheckDistance: 0.5
   wallCheckOffSet: {x: 0, y: 0.5}
   whatIsGround:
@@ -1345,8 +1345,8 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Time: 0.05
+  m_SortingOrder: -1
+  m_Time: 0.1
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -1369,8 +1369,8 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 0.89, g: 0.89, b: 0.89, a: 1}
-      key2: {r: 0.4039216, g: 0.4039216, b: 0.4039216, a: 0}
+      key1: {r: 1, g: 1, b: 1, a: 0}
+      key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1386,13 +1386,13 @@ TrailRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
-      m_Mode: 0
+      m_Mode: 2
       m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
@@ -2313,7 +2313,7 @@ Transform:
   m_GameObject: {fileID: 1893557474}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.437, y: -0.276, z: -10}
+  m_LocalPosition: {x: -4.71, y: -4.16, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
