@@ -178,6 +178,15 @@ public class PlayerMovementImproved : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * yModifer);
     }
 
+    // Wall jump
+
+    // conditions - Touching a wall, Airborne then you can wall jump
+
+    private void WallJump()
+    {
+        
+    }
+
     private void HandleCollision()
     {
         isGrounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistnace, whatIsGround);
